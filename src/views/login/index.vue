@@ -4,16 +4,16 @@
       <div class="logo">
         <img src="../../assets/img/logo_index.png" alt />
       </div>
-      <el-form>
-        <el-form-item>
-          <el-input></el-input>
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
+        <el-form-item prop="mobile">
+          <el-input placeholder="请输入手机号" v-model="loginForm.mobile"></el-input>
         </el-form-item>
-        <el-form-item>
-          <el-input style="width:230px"></el-input>
+        <el-form-item prop="code">
+          <el-input style="width:230px" placeholder="请输入验证码" v-model="loginForm.code"></el-input>
           <el-button style="float:right">发送验证码</el-button>
         </el-form-item>
-        <el-form-item>
-          <el-checkbox>我已阅读并同意用户协议和隐私条款</el-checkbox>
+        <el-form-item prop="check">
+          <el-checkbox v-model="loginForm.check">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" style="width:100%; ">登录</el-button>
@@ -24,7 +24,50 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    let validator = function (rule, value, callBack) {
+      if (value) {
+        callBack() // 如果value为true直接通过
+      } else {
+        callBack(new Error('兄弟,从了吧'))
+      }
+    }
+    return {
+      loginForm: {
+        mobile: '',
+        code: ''
+      },
+      loginRules: {
+        mobile: [
+          {
+            required: true, // 意味着必填
+            message: '手机号不能为空'
+          },
+          {
+            pattern: /^1[3456789]\d{9}$/, // 正则 满足手机号格式
+            message: '手机号码格式不正确'
+          }
+        ],
+        code: [
+          {
+            required: true,
+            message: '验证码不能为空'
+          },
+          {
+            pattern: /^\d{6}$/,
+            message: '验证码必须是6位数字'
+          }
+        ],
+        check: [
+          {
+            validator
+          }
+        ]
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
