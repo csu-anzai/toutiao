@@ -6,14 +6,14 @@
     </el-col>
     <el-col class="right" :span="3">
       <img :src="userInfo.photo ? userInfo.photo : defaultImg" alt="">
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command='handleMenuItem'>
       <span class="el-dropdown-link">
         琪琪怪<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item icon="el-icon-plus">个人信息</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus">git地址</el-dropdown-item>
-        <el-dropdown-item icon="el-icon-circle-plus-outline">退出</el-dropdown-item>
+        <el-dropdown-item command='account'>个人信息</el-dropdown-item>
+        <el-dropdown-item command='git'>git地址</el-dropdown-item>
+        <el-dropdown-item command='lgout'>退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
     </el-col>
@@ -36,9 +36,21 @@ export default {
         url: '/user/profile',
         headers: { 'Authorization': `Bearer ${token}` }
       }).then(result => {
-        console.log(result)
+        // console.log(result)
         this.userInfo = result.data.data
       })
+    },
+    // 点击菜单触发的方法
+    handleMenuItem (command) {
+      if (command === 'account') {
+        // 账户信息
+      } else if (command === 'git') {
+        window.location.href = 'https://github.com/414540913/toutiao'
+      } else {
+        // 退出
+        window.localStorage.clear() // 清除缓存 清除所有缓存(只能清除自己当前项目的缓存)
+        this.$router.push('/login')
+      }
     }
   },
 
