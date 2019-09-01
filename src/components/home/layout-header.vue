@@ -8,7 +8,7 @@
       <img src="../../assets/img/avatar.jpg" alt="">
       <el-dropdown trigger="click">
       <span class="el-dropdown-link">
-        窝窝头<i class="el-icon-arrow-down el-icon--right"></i>
+        琪琪怪<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item icon="el-icon-plus">个人信息</el-dropdown-item>
