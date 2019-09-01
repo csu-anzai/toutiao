@@ -8,7 +8,9 @@
     <!-- 右侧 -->
     <el-container>
       <!-- 头部 -->
-      <el-header>头部</el-header>
+      <el-header>
+        <layout-header></layout-header>
+      </el-header>
       <!-- 主体 -->
       <el-main>主体</el-main>
     </el-container>
@@ -16,10 +18,13 @@
 </template>
 
 <script>
-import layoutAside from '../../components/layout-aside.vue'
+import layoutAside from '../../components/home/layout-aside.vue'
+import layoutHeader from '../../components/home/layout-header.vue'
+
 export default {
   components: {
-    'layout-aside': layoutAside
+    'layout-aside': layoutAside,
+    'layout-header': layoutHeader
   }
 }
 </script>

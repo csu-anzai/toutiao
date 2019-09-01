@@ -2,7 +2,7 @@
   <div class="login">
     <el-card class="login-card">
       <div class="logo">
-        <img src="../../assets/img/logo_index.png" alt />
+        <img src="../../assets/img/login_bg.jpg" alt />
       </div>
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
         <el-form-item prop="mobile">
