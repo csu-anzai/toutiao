@@ -1,9 +1,9 @@
 <template>
-  <div class="layout-aside">
+  <div class="layout-aside" style="background-color: #323745">
     <div class="title">
       <img src="../../assets/img/logo_index.png" alt />
     </div>
-    <el-menu background-color="#353b4e" text-color="#adafb5" router>
+    <el-menu background-color="#353b4e" text-color="#adafb5" router style="width:201px">
       <el-menu-item index="/">
         <i class="el-icon-menu"></i>
         <span slot="title">首页</span>
@@ -43,9 +43,13 @@ export default {}
 
 <style lang="less" scoped>
 .layout-aside {
+  margin-right:0;
   width: 200px;
-  height: 100vh;
+  height: 100%;
+  // background-size: cover;
   background-color: #323745;
+  position: fixed;
+
   .title {
     text-align: center;
     background: #2e2f32;

@@ -1,14 +1,14 @@
 <template>
   <el-row class="layout-header" type="flex" justify='space-between'>
     <el-col class="left" :span="6">
-      <i class="el-icon-s-unfold"></i>
+      <i class="el-icon-s-unfold" style="margin-right:10px"></i>
       <span>江苏传智播客教育科技股份有限公司</span>
     </el-col>
     <el-col class="right" :span="3">
       <img :src="userInfo.photo ? userInfo.photo : defaultImg" alt="">
       <el-dropdown trigger="click" @command='handleMenuItem'>
       <span class="el-dropdown-link">
-        琪琪怪<i class="el-icon-arrow-down el-icon--right"></i>
+        {{userInfo.name}}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command='account'>个人信息</el-dropdown-item>
@@ -31,11 +31,11 @@ export default {
   methods: {
     // 获取用户数据
     getUserInfo () {
-      let token = window.localStorage.getItem('user-token') // 获取token
       this.$axios({
-        url: '/user/profile',
-        headers: { 'Authorization': `Bearer ${token}` }
+        url: '/user/profile'
+
       }).then(result => {
+        // debugger
         // console.log(result)
         this.userInfo = result.data
       })
@@ -64,13 +64,18 @@ export default {
 
 <style lang='less' scoped>
 .layout-header{
-  padding: 8px 0;
+  margin-left:0;
+  font-size: 16px;
+  height: 50px;
+  padding: 15px 0;
     .right{
       display:flex;
       align-items: center;
       img{
         border-radius: 50%;
         height: 30px;
+        width: 30px;
+
         margin-right: 10px;
       }
     }

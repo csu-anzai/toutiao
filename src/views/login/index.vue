@@ -2,7 +2,7 @@
   <div class="login">
     <el-card class="login-card">
       <div class="logo">
-        <img src="../../assets/img/login_bg.jpg" alt />
+        <img src="../../assets/img/logo_index.png" alt />
       </div>
       <el-form ref="loginForm" :model="loginForm" :rules="loginRules">
         <el-form-item prop="mobile">
@@ -85,13 +85,13 @@ export default {
               // 跳转首页
               this.$router.push('/')
             })
-            .catch(err => {
-              console.log(err)
-              this.$message({
-                message: '手机号或者验证码错误',
-                type: 'warning'
-              })
-            })
+            // .catch(err => {
+            //   console.log(err)
+            //   this.$message({
+            //     message: '手机号或者验证码错误',
+            //     type: 'warning'
+            //   })
+            // })
         }
       })
     }
