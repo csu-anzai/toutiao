@@ -81,7 +81,7 @@ export default {
             .then(result => {
               console.log(result)
               // 放到前端的缓存中
-              window.localStorage.setItem('user-token', result.data.data.token)
+              window.localStorage.setItem('user-token', result.data.token)
               // 跳转首页
               this.$router.push('/')
             })
