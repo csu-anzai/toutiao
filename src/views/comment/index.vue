@@ -67,7 +67,7 @@ export default {
         this.$axios({
           method: 'put',
           url: '/comments/status',
-          params: { article_id: row.id },
+          params: { article_id: row.id.toString() }, // 传递articleId参数
           data: { allow_comment: !row.comment_status }
         }).then((result) => {
           this.getComments() // 成功之后 重新调用拉取数据的方法 => 前后台同步
