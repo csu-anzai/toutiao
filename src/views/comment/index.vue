@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading='loading'>
       <bread-crumb slot="header">
             <template slot="title">
                 评论列表
@@ -53,6 +53,7 @@
 export default {
   data () {
     return {
+      loading: false, // 控制进度条的状态
       list: [],
       page: {
         page: 1, // 当前页码
@@ -67,10 +68,14 @@ export default {
       return row.comment_status ? '正常' : '关闭'
     },
     getComments () {
+      this.loading = true // 请求数据之前 把进度条打开
+      // query参数 就相当于get参数 路径参数 url参数 params
+      // body 路径参数  data
       this.$axios({
         url: '/articles',
         params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(result => {
+        this.loading = false // 响应数据之后关闭进度条
         this.list = result.data.results
         this.page.total = result.data.total_count
       })
