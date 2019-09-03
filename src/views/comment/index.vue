@@ -35,6 +35,17 @@
           </template>
       </el-table-column>
     </el-table>
+<!-- 分页符部分 -->
+ <!-- <el-pagination @current-change="changePage" :current-page="page.page" :page-size="page.pageSize" :total="page.total" background layout="prev, pager, next" ></el-pagination> -->
+
+    <el-row type="flex" justify="center" style="margin-top:20px">
+        <el-pagination @current-change='changePage' :page-size='page.pageSize' :current-page='page.page'
+        background
+        layout="prev, pager, next"
+        :total="page.total">
+        </el-pagination>
+    </el-row>
+
   </el-card>
 </template>
 
@@ -42,7 +53,12 @@
 export default {
   data () {
     return {
-      list: []
+      list: [],
+      page: {
+        page: 1, // 当前页码
+        pageSize: 10, // 当前每页条数
+        total: 0 // 总条数
+      }
     }
   },
   methods: {
@@ -53,9 +69,10 @@ export default {
     getComments () {
       this.$axios({
         url: '/articles',
-        params: { response_type: 'comment' }
+        params: { response_type: 'comment', page: this.page.page, per_page: this.page.pageSize }
       }).then(result => {
         this.list = result.data.results
+        this.page.total = result.data.total_count
       })
     },
     // 打开或者关闭评论
@@ -73,6 +90,11 @@ export default {
           this.getComments() // 成功之后 重新调用拉取数据的方法 => 前后台同步
         })
       })
+    },
+    changePage (newPage) {
+      // 给当前页码更新最新值
+      this.page.page = newPage
+      this.getComments()
     }
   },
   created () {
