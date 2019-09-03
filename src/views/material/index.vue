@@ -18,6 +18,10 @@
                         </el-row>
                     </el-card>
                 </div>
+                <!-- 分页 -->
+                 <el-row type='flex' justify="center">
+                    <el-pagination @current-change="changePage" :current-page="page.page" :page-size="page.pageSize"  :total="page.total" background layout="prev, pager, next" ></el-pagination>
+                </el-row>
 
             </el-tab-pane>
             <el-tab-pane label="收藏内容" name="collect">
@@ -27,6 +31,11 @@
 
                     </el-card>
                 </div>
+                <!-- 分页 -->
+                 <el-row type='flex' justify="center">
+                    <el-pagination @current-change="changePage" :current-page="page.page" :page-size="page.pageSize"  :total="page.total" background layout="prev, pager, next" ></el-pagination>
+                </el-row>
+
             </el-tab-pane>
 
     </el-tabs>
@@ -38,17 +47,31 @@ export default {
   data () {
     return {
       activeName: 'all',
-      list: []
+      list: [],
+      page: {
+        page: 1,
+        pageSize: 10,
+        total: 0
+      }
     }
   },
   methods: {
+    changePage (newPage) {
+      this.page.page = newPage
+      this.getMaterial() // 请求最新的数据
+    },
     getMaterial () {
       this.$axios({
         url: '/user/images',
-        params: { collect: this.activeName === 'collect' } // collect为false就是查全部数据 collect 为true的话 是查询收藏数据
+        params: {
+          collect: this.activeName === 'collect', // collect为false就是查全部数据 collect 为true的话 是查询收藏数据
+          page: this.page.page,
+          per_page: this.page.pageSize
+        }
 
       }).then((result) => {
         this.list = result.data.results // 接收数据
+        this.page.total = result.data.total_count
       })
     },
     // 切换页面
@@ -57,6 +80,7 @@ export default {
       // 加载不同类型的数据
       // all => 所有的数据
       // collect => 去加载收藏数据
+      this.page.page = 1
       this.getMaterial()
     }
   },
@@ -73,8 +97,8 @@ export default {
             flex-wrap: wrap;
             justify-content: center;
             .img-card{
-                width: 200px;
-                height: 200px;
+                width: 180px;
+                height: 180px;
                 margin:30px;
                 position: relative;
                 img{
