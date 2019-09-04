@@ -14,7 +14,7 @@
                         <img :src="item.url" alt="">
                         <el-row class='operate' type='flex' align="middle" justify="space-around">
                             <i :style="{color: item.is_collected ? 'red' : ''}" class='el-icon-star-on'></i>
-                            <i class='el-icon-delete-solid'></i>
+                            <i @click='delImg(item)' class='el-icon-delete-solid'></i>
                         </el-row>
                     </el-card>
                 </div>
@@ -56,6 +56,17 @@ export default {
     }
   },
   methods: {
+    delImg (item) {
+      this.$confirm('您确定要删除么', '提示').then(() => {
+        // 确定要删除
+        this.$axios({
+          method: 'delete',
+          url: `/user/images/${item.id}`
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
     changePage (newPage) {
       this.page.page = newPage
       this.getMaterial() // 请求最新的数据
