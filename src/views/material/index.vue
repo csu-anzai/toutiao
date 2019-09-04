@@ -13,7 +13,7 @@
                     <el-card v-for='item in list' :key='item.id' class="img-card">
                         <img :src="item.url" alt="">
                         <el-row class='operate' type='flex' align="middle" justify="space-around">
-                            <i :style="{color: item.is_collected ? 'red' : ''}" class='el-icon-star-on'></i>
+                            <i @click='collectOrCancel(item)' :style="{color: item.is_collected ? 'red' : ''}" class='el-icon-star-on'></i>
                             <i @click='delImg(item)' class='el-icon-delete-solid'></i>
                         </el-row>
                     </el-card>
@@ -56,6 +56,19 @@ export default {
     }
   },
   methods: {
+    // 收藏或取消收藏
+    collectOrCancel (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`确定要${mess}收藏这种图片?`, '提示').then(() => {
+        this.$axios({
+          data: { collect: !item.is_collected }, // 取相反
+          method: 'put',
+          url: `/user/images/${item.id}`
+        }).then(() => {
+          this.getMaterial()
+        })
+      })
+    },
     delImg (item) {
       this.$confirm('您确定要删除么', '提示').then(() => {
         // 确定要删除
